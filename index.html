@@ -7,7 +7,16 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 </script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+<style> 
+  .jumbotron {
+  	background-image: url("images/choochoo.jpg");
+  	background-size: 100% 100%;
+  	color: white;
+  	text-shadow: 0 0 10px black;
 
+  }
+</style>
 
 </head>
 <body>
@@ -15,7 +24,8 @@
 	<div class="jumbotron text-center">
 		<h1>Train Scheduler</h1>
 		<hr>
-		<h2>Current Time:<span id="currentTime"></span></h2>
+		<h2>Current Date: <span id="currentDate"></span></h2>
+		<h2>Current Time: <span id="currentTime"></span></h2>
 	</div><!-- jumbotron end -->
 	
 	<div class="row">
