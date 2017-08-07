@@ -10,6 +10,8 @@ var config = {
   };
 firebase.initializeApp(config);
 //variables and button click=======================================
+var database = firebase.database();
+
 $("#submit").on("click", function() {
 // Prevent the page from refreshing
       event.preventDefault();
@@ -20,7 +22,7 @@ $("#submit").on("click", function() {
 	var name = $("#freqInput").val().trim();
 
 //push values to firebase==========================================
-	database.ref().push().({
+	database.ref().push({
 		name: name,
 		dest: dest,
 		time: time,
@@ -41,6 +43,33 @@ database.ref().on("child_added", function(childSnapshot){
 	console.log("Destination: " + dest);
 	console.log("Time: " + time);
 	console.log("Frequency: " + freq);
+
+//convert train time=============================================
+	var freq = parseInt(freq);
+    //current time
+    var currentTime = moment();
+    console.log("current time: " + moment().format('HH:mm'));
+    //first time back 1 year to ensure positive value
+    var dConverted = moment(childSnapshot.val().time, 'HH:mm').subtract(1, 'years')
+    console.log("Date converted: " + dConverted);
+    var trainTime = moment(dConverted).format('HH:mm');
+    console.log("Train Time: " + trainTime);
+
+    //difference between the times subtract 1 year to ensure positive value
+    var tConverted = moment(trainTime, 'HH;mm').subtract(1, 'years');
+    var tDifference = moment().diff(moment(tConverted), 'minutes');
+    console.log("Time diffreence: " + tDifference);
+    //modulus for the remainder
+    var tRemainder = tDifference & freq;
+    console.log("Time remaining: " + tRemainder);
+    //calculate minutes until next train
+    var minsAway = freq - tRemainder;
+    console.log("Minutes until next train " + minsAway);
+    //next train time
+    var nextTrain = moment().add(minsAway, "minutes");
+    console.log("Arrival time: " + moment(nextTrain).format('HH;mm'));
+
+
 })
 
 
